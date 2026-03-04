@@ -50,15 +50,15 @@ class VoucherServiceTests {
     @Test
     @DisplayName("Test getByPhone")
     void testGetByPhone() {
-        // Setup our mock
-        List<Voucher> vouchers = List.of(
+        // Set up our mock
+        var vouchers = List.of(
                 new Voucher("12345", "d2a9nRzhFZIiv923Y2gz7eDjJCTl2JdkVMMRgjcVX60vEMeWH2YtfVfAhXU43eUz"),
                 new Voucher("12345", "l3nsNDA7MKJHGnJQOJYtRjfNvwBPI1kworX/ksE/7/FW17TaSSMzK1ru1CJqC12t")
         );
         doReturn(vouchers).when(repository).findByPhone("12345");
 
         // Execute the service call
-        List<Voucher> results = service.getByPhone("12345");
+        var results = service.getByPhone("12345");
 
         Assertions.assertEquals(2, results.size(), "getByPhone should return 2 vouchers");
     }
@@ -66,20 +66,16 @@ class VoucherServiceTests {
     @Test
     @DisplayName("Test getCode")
     void testGetCode() throws Exception {
-        // Setup our mock
-        Voucher newEncryptedVoucher = new Voucher("12345", "d2a9nRzhFZIiv923Y2gz7eDjJCTl2JdkVMMRgjcVX60vEMeWH2YtfVfAhXU43eUz");
-        mockServer.expect(ExpectedCount.once(),
-                        requestTo(new URI(service.getVendorServiceUrl() + "/get-voucher-code")))
+        // Set up our mock
+        var newEncryptedVoucher = new Voucher("12345", "d2a9nRzhFZIiv923Y2gz7eDjJCTl2JdkVMMRgjcVX60vEMeWH2YtfVfAhXU43eUz");
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(service.getVendorServiceUrl() + "/get-voucher-code")))
                 .andExpect(method(HttpMethod.GET))
-                .andRespond(withStatus(HttpStatus.OK)
-                        .contentType(MediaType.TEXT_PLAIN)
-                        .body(newEncryptedVoucher.getCode())
-                );
+                .andRespond(withStatus(HttpStatus.OK).contentType(MediaType.TEXT_PLAIN).body(newEncryptedVoucher.getCode()));
         doReturn(newEncryptedVoucher).when(repository).save(any());
 
         // Execute the service call
-        Voucher returnedVoucher = service.getCode(new Voucher("12345", null));
+        var returnedVoucher = service.getCode(new Voucher("12345", null));
 
-        Assertions.assertEquals(returnedVoucher, new Voucher("12345", "aaaaaa"));
+        Assertions.assertEquals(new Voucher("12345", "aaaaaa"), returnedVoucher);
     }
 }

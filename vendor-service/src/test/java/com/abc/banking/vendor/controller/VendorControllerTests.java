@@ -29,7 +29,7 @@ class VendorControllerTests {
     @Test
     @DisplayName("GET /get-voucher-code - Success")
     void testGetVoucherCodeSuccess() throws Exception {
-        // Setup our mocked service
+        // Set up our mocked service
         doReturn("voucher-code-1").when(service).getCode();
 
         // Execute the GET request

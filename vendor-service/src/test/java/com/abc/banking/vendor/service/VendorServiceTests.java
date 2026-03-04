@@ -42,18 +42,14 @@ class VendorServiceTests {
     @DisplayName("Test getCode")
     void testGetCode() throws Exception {
         // Setup our mock
-        String expectedCode = "voucher-code-1";
-        mockServer.expect(ExpectedCount.once(),
-                        requestTo(new URI(service.getVendorVoucherUrl())))
+        var expectedCode = "voucher-code-1";
+        mockServer.expect(ExpectedCount.once(), requestTo(new URI(service.getVendorVoucherUrl())))
                 .andExpect(method(HttpMethod.GET))
-                .andRespond(withStatus(HttpStatus.OK)
-                        .contentType(MediaType.TEXT_PLAIN)
-                        .body("voucher-code-1")
-                );
+                .andRespond(withStatus(HttpStatus.OK).contentType(MediaType.TEXT_PLAIN).body("voucher-code-1"));
 
         // Execute the service call
-        String returnedCode = service.getCode();
+        var returnedCode = service.getCode();
 
-        Assertions.assertEquals(returnedCode, expectedCode);
+        Assertions.assertEquals(expectedCode, returnedCode);
     }
 }

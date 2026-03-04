@@ -35,8 +35,8 @@ class VoucherControllerTests {
     @Test
     @DisplayName("GET /vouchers?phone=12345 - Success")
     void testGetVoucherByPhoneSuccess() throws Exception {
-        // Setup our mocked service
-        List<Voucher> vouchers = List.of(new Voucher("12345", "voucher-code-1"), new Voucher("12345", "voucher-code-2"));
+        // Set up our mocked service
+        var vouchers = List.of(new Voucher("12345", "voucher-code-1"), new Voucher("12345", "voucher-code-2"));
         doReturn(vouchers).when(service).getByPhone("12345");
 
         // Execute the GET request
@@ -54,7 +54,7 @@ class VoucherControllerTests {
     @Test
     @DisplayName("POST /vouchers - Success")
     void testCreateVoucher() throws Exception {
-        // Setup mocked service
+        // Set up mocked service
         doReturn(new Voucher("12345", "voucher-code-1")).when(service).getCode(new Voucher("12345", null));
 
         mockMvc.perform(post("/vouchers")
