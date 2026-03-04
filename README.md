@@ -1,5 +1,5 @@
 # Voucher Support
-This service is a part of ABC Banking eco system to help customer purchase prepaid data for a SIM card by getting a voucher code from a 3rd party
+This service is a part of ABC Banking ecosystem to help customer purchase prepaid data for a SIM card by getting a voucher code from a 3rd party
 
 ## Requirements
 ### Functional Requirements
@@ -41,8 +41,8 @@ This service is a part of ABC Banking eco system to help customer purchase prepa
 * Services expose REST API and communicate via HTTP
 
 ### Security
-* Services could terminal SSL for improve perfomance and require an API Gateway in the front
-* If security is strictly between service, we can using HTTPS that need to configure on each service
+* Services could terminate SSL for improve performance and require an API Gateway in the front
+* If security is strictly between service, we can use HTTPS that need to configure on each service
 
 ## Project folder structure
 * documents: contains all material document of this project
@@ -61,7 +61,7 @@ This service is a part of ABC Banking eco system to help customer purchase prepa
 * VOUCHER_SERVICE_PORT: voucher-service server port
 * MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD: mysql endpoint and credential
 * VENDOR_SERVICE_URL: vendor-service endpoint
-* JASYPT_ENCRYPTOR_PASSWORD: encrypt password that using to encrypt voucher code in database and descrypt it before return to customer
+* JASYPT_ENCRYPTOR_PASSWORD: encrypt password that using to encrypt voucher code in database and decrypt it before return to customer
 
 ## Libraries and frameworks and tools
 * Java 11
@@ -74,7 +74,7 @@ This service is a part of ABC Banking eco system to help customer purchase prepa
 
 ## Start
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Initial database (`voucher`), table (`voucher`) and sample data on mysql (docker)
@@ -83,11 +83,11 @@ docker exec -i mysql mysql -umyusername -pmypassword voucher < ./voucher-service
 ```
 
 ### Mock Server: restart is required
-To simulating both happy case and unhappy case, we config requests that have fixed times to call and delayed before retrurn voucher code in turn is 5 seconds and 40 seconds
+To simulating both happy case and unhappy case, we config requests that have fixed times to call and delayed before return voucher code in turn is 5 seconds and 40 seconds
 So we need to restart mock server after 4 tests for endpoint: `http://localhost:1080/get-voucher-code`
 How to restart mock server:
 ```bash
-docker-compose up -d --force-recreate vendor-mockserver
+docker compose up -d --force-recreate vendor-mockserver
 ```
 
 ## View
@@ -108,5 +108,5 @@ curl --location --request POST 'http://localhost:8081/vouchers' \
 
 ## Stop
 ```bash
-docker-compose down
+docker compose down --volumes --remove-orphans
 ```

@@ -23,7 +23,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class VendorServiceTests {
+class VendorServiceTests {
 
     @Autowired
     private VendorService service;
@@ -44,7 +44,7 @@ public class VendorServiceTests {
         // Setup our mock
         String expectedCode = "voucher-code-1";
         mockServer.expect(ExpectedCount.once(),
-                requestTo(new URI(service.getVendorVoucherUrl())))
+                        requestTo(new URI(service.getVendorVoucherUrl())))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.TEXT_PLAIN)

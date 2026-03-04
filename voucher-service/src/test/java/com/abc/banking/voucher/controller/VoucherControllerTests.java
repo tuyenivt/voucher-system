@@ -2,7 +2,6 @@ package com.abc.banking.voucher.controller;
 
 import com.abc.banking.voucher.model.Voucher;
 import com.abc.banking.voucher.service.VoucherService;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class VoucherControllerTests {
-    @MockBean
+class VoucherControllerTests {
+    @MockitoBean
     private VoucherService service;
 
     @Autowired
@@ -59,8 +58,8 @@ public class VoucherControllerTests {
         doReturn(new Voucher("12345", "voucher-code-1")).when(service).getCode(new Voucher("12345", null));
 
         mockMvc.perform(post("/vouchers")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(new Voucher("12345", null))))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(new Voucher("12345", null))))
 
                 // Validate the response code and content type
                 .andExpect(status().isOk())

@@ -1,0 +1,3 @@
+rootProject.name = 'voucher-system'
+include 'voucher-service'
+include 'vendor-service'

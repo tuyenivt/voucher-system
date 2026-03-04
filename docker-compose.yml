@@ -1,9 +1,8 @@
-version: '3.8'
 services:
   voucher-service:
     build:
-      context: ./voucher-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: voucher-service/Dockerfile
     image: voucher-service:latest
     container_name: voucher-service
     #restart: on-failure
@@ -14,8 +13,8 @@ services:
       - mysql
   vendor-service:
     build:
-      context: ./vendor-service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: vendor-service/Dockerfile
     image: vendor-service:latest
     container_name: vendor-service
     #restart: on-failure
@@ -23,11 +22,11 @@ services:
       - "8082:8082"
     network_mode: "host"
   mysql:
-    image: mysql:5.7
+    image: mysql:8.4
     container_name: mysql
     command: --default-authentication-plugin=mysql_native_password
     volumes:
-        - ./tmp-docker-vol/mysql:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: voucher
@@ -37,14 +36,17 @@ services:
       - "3306:3306"
     network_mode: "host"
   vendor-mockserver:
-    image: mockserver/mockserver:mockserver-5.11.1
+    image: mockserver/mockserver:mockserver-5.15.0
     container_name: vendor-mockserver
     ports:
       - "1080:1080"
     volumes:
-      - ./mockserver:/config
+      - mockserver_config:/config
     network_mode: "host"
     environment:
       MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
       MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializerJson.json
 
+volumes:
+  mysql_data:
+  mockserver_config:
